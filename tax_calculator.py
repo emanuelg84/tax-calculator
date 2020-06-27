@@ -17,18 +17,17 @@ for i, row in State_tax.iterrows():
         agg_income.append(d)
 
 
-float(agg_income_int = 0)
+agg_income_int = 0.00001
 
 for i in agg_income:
-    #print(type(i['tax_rate']))
-    b = ((float(i['bracket']) * float(i['tax_rate']))
-    agg_income_int = agg_income_int + b
-    #agg_income_int=agg_income_int+i['bracket']
-    # print(str(int((i['bracket'])) * int(i['tax_rate'])))
-    #agg_income_int = agg_income_int + (int(i['bracket']) * int(i['tax_rate']))
-
+    if int(i['bracket']) < int(Income):
+        a = float(i['tax_rate'])
+        b = float(i['bracket'])
+        c = a*b
+        agg_income_int = agg_income_int + c
+    
+ 
 print(str(agg_income_int))
 
-#for i in Federal_tax:  
-    #print(Federal_tax["i"])   
+
  
