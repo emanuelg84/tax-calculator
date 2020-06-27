@@ -19,19 +19,18 @@ for i, row in State_tax.iterrows():
         
 agg_state_income_tax = 0.00001
 
-
+current_state_bracket = 0
 
 for i in agg_income1:
     if int(i['bracket']) < int(Income):
         a = float(i['tax_rate'])
-        b = float(i['bracket'])
+        b = float(i['bracket']) - current_state_bracket
         c = a*b
         agg_state_income_tax = agg_state_income_tax + c
         current_state_bracket = int((i['bracket']))
         incremental_tax_state = (float(int(Income) - int((i['bracket']))) )* a
 
-#print(str(current_state_bracket) + " incremental: " + str((int(Income) - current_state_bracket)))
-#print(str(agg_state_income_tax) + " incremental: " + str(incremental_tax_state))  
+
 print("Your state income tax is: ","$"+"{:,.2f}".format(agg_state_income_tax+incremental_tax_state))
 
 
@@ -42,11 +41,12 @@ for i, row in Federal_tax.iterrows():
         
 agg_fed_income_tax = 0.00001
 agg_fed_income = 0
+current_fed_bracket = 0
 
 for i in agg_income2:
     if int(i['bracket']) < int(Income):
         x = float(i['tax_rate'])
-        y = float(i['bracket'])
+        y = float(i['bracket']) - current_fed_bracket
         z = x*y
         agg_fed_income_tax = agg_fed_income_tax + z
         agg_fed_income = agg_fed_income + int((i['bracket']))
@@ -59,5 +59,72 @@ for i in agg_income2:
 
 print("Your federal tax is: ","$"+"{:,.2f}".format(agg_fed_income_tax+incremental_tax_fed))
 
-print("Your total tax is: ","$"+"{:,.2f}".format(agg_fed_income_tax+incremental_tax_fed+agg_state_income_tax+incremental_tax_state))
+total_taxes = agg_fed_income_tax+incremental_tax_fed+agg_state_income_tax+incremental_tax_state
+
+net_income = float(Income) - total_taxes
+net_monthly_income = net_income / 12
+
+print("Your total tax is: ","$"+"{:,.2f}".format(total_taxes ))
+
+print("Your annual net income is: ","$"+"{:,.2f}".format(net_income)+" and your monthly net income is: ","$"+"{:,.2f}".format(net_monthly_income))
+ print("")
+print("----------------------------------------------------------------")
+print("")
+
+ ######################################################################################################
+
+
+#                               Phase 2 - clculate state tax for each state
+
+
+all_state_list = []
+m=[]
+unique_state = state
+
+agg_income3 = []
+
+for i, row in State_tax.iterrows():
+    if row['State'] != unique_state:
+        if row['State'] != "State":
+            all_state_list.append(unique_state)
+            unique_state = row['State']
+             
+
+#print(all_state_list)
+
+
+for i in all_state_list:
+    for j, row in State_tax.iterrows():
+        if (row['State']) == i:
+            h = {"bracket":row['Income'],"tax_rate":row['Tax rate']}
+            agg_income3.append(h)
+            #print(h)
+        current_state_bracket = 0
+        agg_state_income_tax = 0.00001        
+    for k in agg_income3:
+        if int(k['bracket']) < int(Income):
+            a = float(k['tax_rate'])
+            #print(a)
+            b = float(k['bracket']) - current_state_bracket
+            #print(b)
+            c = a*b
+            #print(c)
+            agg_state_income_tax = agg_state_income_tax + c
+            #print(agg_state_income_tax)
+            current_state_bracket = int((k['bracket']))
+            incremental_tax_state = (float(int(Income) - int((k['bracket']))) )* a
+            total_state_tax = agg_state_income_tax + incremental_tax_state
+            #print(total_state_tax)
+    #print(total_state_tax)
+    m.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax)})
+        
+    
+    
+print(m)
  
+        
+
+
+
+
+#
