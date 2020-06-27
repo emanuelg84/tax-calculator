@@ -18,8 +18,9 @@ for i, row in State_tax.iterrows():
         agg_income1.append(d)
         
 agg_state_income_tax = 0.00001
-
+incremental_tax_state=0
 current_state_bracket = 0
+Total_state_tax=0
 
 for i in agg_income1:
     if int(i['bracket']) < int(Income):
@@ -76,6 +77,7 @@ print("")
 
 #                               Phase 2 - clculate state tax for each state
 
+total_state_tax = 0
 
 all_state_list = []
 net_income_per_state=[]
