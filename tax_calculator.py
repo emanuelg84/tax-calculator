@@ -78,7 +78,7 @@ print("")
 
 
 all_state_list = []
-m=[]
+net_income_per_state=[]
 unique_state = state
 
 agg_income3 = []
@@ -116,28 +116,28 @@ for i in all_state_list:
             total_state_tax = agg_state_income_tax + incremental_tax_state
             #print(total_state_tax)
     #print(total_state_tax)
-    m.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax),"total taxes":"$"+"{:,.2f}".format(total_state_tax + agg_fed_income_tax+incremental_tax_fed),"net income":"$"+"{:,.2f}".format(float(Income) - total_state_tax - agg_fed_income_tax - incremental_tax_fed)})
+    net_income_per_state.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax),"total taxes":"$"+"{:,.2f}".format(total_state_tax + agg_fed_income_tax+incremental_tax_fed),"net income":"$"+"{:,.2f}".format(float(Income) - total_state_tax - agg_fed_income_tax - incremental_tax_fed)})
         
     
     
-print(m)
+#print(net_income_per_state.append)
  
         
-chart_title = "Project annual net income per state"
+chart_title = "Projected annual net income per state"
 
 sorted_states = []
+sorted_net_income = []
+
+for d in net_income_per_state:
+    sorted_states.append(d["net income"])
+    sorted_net_income.append(d["state"])
+   
+
+plt.bar(sorted_states, sorted_net_income)
+plt.title(chart_title)
+plt.xlabel("Annual net income")
+plt.ylabel("State")
+plt.show()
 
 
-#for d in top_sellers:
-    #sorted_products.append(d["name"])
-    #sorted_sales.append(d["monthly_sales"])
 
-#plt.bar(sorted_products, sorted_sales)
-#plt.title(chart_title)
-#plt.xlabel("Product")
-#plt.ylabel("Monthly Sales (USD)")
-#plt.show()
-
-
-
-#
