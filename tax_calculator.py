@@ -67,7 +67,7 @@ net_monthly_income = net_income / 12
 print("Your total tax is: ","$"+"{:,.2f}".format(total_taxes ))
 
 print("Your annual net income is: ","$"+"{:,.2f}".format(net_income)+" and your monthly net income is: ","$"+"{:,.2f}".format(net_monthly_income))
- print("")
+print("")
 print("----------------------------------------------------------------")
 print("")
 
@@ -116,14 +116,27 @@ for i in all_state_list:
             total_state_tax = agg_state_income_tax + incremental_tax_state
             #print(total_state_tax)
     #print(total_state_tax)
-    m.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax)})
+    m.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax),"total taxes":"$"+"{:,.2f}".format(total_state_tax + agg_fed_income_tax+incremental_tax_fed),"net income":"$"+"{:,.2f}".format(float(Income) - total_state_tax - agg_fed_income_tax - incremental_tax_fed)})
         
     
     
 print(m)
  
         
+chart_title = "Project annual net income per state"
 
+sorted_states = []
+
+
+#for d in top_sellers:
+    #sorted_products.append(d["name"])
+    #sorted_sales.append(d["monthly_sales"])
+
+#plt.bar(sorted_products, sorted_sales)
+#plt.title(chart_title)
+#plt.xlabel("Product")
+#plt.ylabel("Monthly Sales (USD)")
+#plt.show()
 
 
 
