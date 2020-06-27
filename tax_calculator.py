@@ -32,7 +32,7 @@ for i in agg_income1:
 
 #print(str(current_state_bracket) + " incremental: " + str((int(Income) - current_state_bracket)))
 #print(str(agg_state_income_tax) + " incremental: " + str(incremental_tax_state))  
-print("Your state income tax is: ",str(agg_state_income_tax+incremental_tax_state))
+print("Your state income tax is: ","$"+"{:,.2f}".format(agg_state_income_tax+incremental_tax_state))
 
 
 for i, row in Federal_tax.iterrows():
@@ -57,7 +57,7 @@ for i in agg_income2:
 #print(str(current_fed_bracket) + " incremental: " + str((int(Income) - current_fed_bracket)))
 #print(str(agg_fed_income_tax) + " incremental: " + str(incremental_tax_fed))  
 
-print("Your federal tax is: ",str(agg_fed_income_tax+incremental_tax_fed))
+print("Your federal tax is: ","$"+"{:,.2f}".format(agg_fed_income_tax+incremental_tax_fed))
 
-print("Your total tax is: ",str(agg_fed_income_tax+incremental_tax_fed+agg_state_income_tax+incremental_tax_state))
+print("Your total tax is: ","$"+"{:,.2f}".format(agg_fed_income_tax+incremental_tax_fed+agg_state_income_tax+incremental_tax_state))
  
