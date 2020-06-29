@@ -2,12 +2,41 @@ import pandas
 import matplotlib.pyplot as plt
 import os
 
+
 Income = input("insert your annual salary in dollars: ")
-state = input("insert the abbreviation of the state you would like to analyse (in capital letters): ")
+
 status = input("insert status (for single enter the lettter 's' for marreid enter the letter 'm'): ")
+
+## making sure the state input exist in the database
+
+while status != "s" or "m":
+    status = input("You inserted invalid value, please insert status (for single enter the lettter 's' for marreid enter the letter 'm'): ")
+    if status == "s" or "m":
+        break
+
 
 State_tax = pandas.read_csv(f'data/State_tax_{status}.csv', names = ['State','Income',"Tax rate"])
 Federal_tax = pandas.read_csv(f'data/Federal_tax_{status}.csv',names = ['Income level',"Tax rate"])
+
+
+state = input("insert the abbreviation of the state you would like to analyse (in capital letters): ")
+
+## making sure the state input exist in the database
+check_state = "not_ok"
+
+for i, row in State_tax.iterrows():
+    if row['State'] == state:
+        check_state = "ok"
+    
+while check_state != "ok":
+    state = input("You inserted invalid value, insert the abbreviation of the state you would like to analyse (in capital letters): ")
+    for i, row in State_tax.iterrows():
+        if row['State'] == state:
+            check_state = "ok"                 
+    if check_state == "ok":
+        break
+
+
 
 agg_income1 = []
 agg_income2 = []
@@ -131,14 +160,14 @@ sorted_states = []
 sorted_net_income = []
 
 for d in net_income_per_state:
-    sorted_states.append(d["net income"])
-    sorted_net_income.append(d["state"])
+    sorted_states.append(d["state"])
+    sorted_net_income.append(d["net income"])
    
 
 plt.bar(sorted_states, sorted_net_income)
 plt.title(chart_title)
-plt.xlabel("Annual net income")
-plt.ylabel("State")
+plt.xlabel("State")
+plt.ylabel("net income")
 plt.show()
 
 
