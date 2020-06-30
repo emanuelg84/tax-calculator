@@ -8,6 +8,8 @@ I believe that in the current environment where working remotely became essentia
 ***User inputs***
 The user is required to provide his annual income, the state where he/she currently resides and filing status (s = single, m= married)
 
+The program will make sure the inputs of state and filing status are valid
+
 ***Outputs***
 The program will calculate the total tax comprised of federal and state, based on the inputs provided. Moreover, the program will present view of the user net income under different jurisdictions. 
 
