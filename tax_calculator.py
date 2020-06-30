@@ -7,11 +7,12 @@ Income = input("insert your annual salary in dollars: ")
 
 status = input("insert status (for single enter the lettter 's' for marreid enter the letter 'm'): ")
 
-## making sure the state input exist in the database
+## making sure a valid martial status was inserted
 
-while status != "s" or "m":
+
+while status != "s" or status !="m":
     status = input("You inserted invalid value, please insert status (for single enter the lettter 's' for marreid enter the letter 'm'): ")
-    if status == "s" or "m":
+    if status == "s" or status == "m":
         break
 
 
@@ -60,6 +61,7 @@ for i in agg_income1:
         current_state_bracket = int((i['bracket']))
         incremental_tax_state = (float(int(Income) - int((i['bracket']))) )* a
 
+print("****************************************************************")
 
 print("Your state income tax is: ","$"+"{:,.2f}".format(agg_state_income_tax+incremental_tax_state))
 
@@ -84,8 +86,7 @@ for i in agg_income2:
         incremental_tax_fed = (float(int(Income) - int((i['bracket']))) )* x
 
        
-#print(str(current_fed_bracket) + " incremental: " + str((int(Income) - current_fed_bracket)))
-#print(str(agg_fed_income_tax) + " incremental: " + str(incremental_tax_fed))  
+
 
 print("Your federal tax is: ","$"+"{:,.2f}".format(agg_fed_income_tax+incremental_tax_fed))
 
@@ -95,16 +96,18 @@ net_income = float(Income) - total_taxes
 net_monthly_income = net_income / 12
 
 print("Your total tax is: ","$"+"{:,.2f}".format(total_taxes ))
-
+print("****************************************************************")
 print("Your annual net income is: ","$"+"{:,.2f}".format(net_income)+" and your monthly net income is: ","$"+"{:,.2f}".format(net_monthly_income))
 print("")
 print("----------------------------------------------------------------")
 print("")
 
+
+
  ######################################################################################################
 
-
-#                               Phase 2 - clculate state tax for each state
+show = input("Please click any key to show net income in other states: ")
+#                              Phase 2 - clculate state tax for each state
 
 total_state_tax = 0
 
@@ -121,38 +124,33 @@ for i, row in State_tax.iterrows():
             unique_state = row['State']
              
 
-#print(all_state_list)
-
 
 for i in all_state_list:
     for j, row in State_tax.iterrows():
         if (row['State']) == i:
             h = {"bracket":row['Income'],"tax_rate":row['Tax rate']}
             agg_income3.append(h)
-            #print(h)
+            
         current_state_bracket = 0
         agg_state_income_tax = 0.00001        
     for k in agg_income3:
         if int(k['bracket']) < int(Income):
             a = float(k['tax_rate'])
-            #print(a)
+            
             b = float(k['bracket']) - current_state_bracket
-            #print(b)
+           
             c = a*b
-            #print(c)
+            
             agg_state_income_tax = agg_state_income_tax + c
-            #print(agg_state_income_tax)
+            
             current_state_bracket = int((k['bracket']))
             incremental_tax_state = (float(int(Income) - int((k['bracket']))) )* a
             total_state_tax = agg_state_income_tax + incremental_tax_state
-            #print(total_state_tax)
-    #print(total_state_tax)
+            
     net_income_per_state.append({"state":i,"state_income_tax":"$"+"{:,.2f}".format(total_state_tax),"total taxes":"$"+"{:,.2f}".format(total_state_tax + agg_fed_income_tax+incremental_tax_fed),"net income":"$"+"{:,.2f}".format(float(Income) - total_state_tax - agg_fed_income_tax - incremental_tax_fed)})
         
     
     
-#print(net_income_per_state.append)
- 
         
 chart_title = "Projected annual net income per state"
 
@@ -162,13 +160,15 @@ sorted_net_income = []
 for d in net_income_per_state:
     sorted_states.append(d["state"])
     sorted_net_income.append(d["net income"])
-   
 
-plt.bar(sorted_states, sorted_net_income)
+sorted_net_income.sort()
+sorted_states.sort()
+
+
+plt.bar(sorted_states,sorted_net_income)
 plt.title(chart_title)
 plt.xlabel("State")
 plt.ylabel("net income")
 plt.show()
-
 
 
